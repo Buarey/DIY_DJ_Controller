@@ -42,7 +42,32 @@ The current prototype includes:
 - `Encoders`: 3 total
   - 1 browse encoder
   - 2 jog wheel encoders
+- `Encoder model`: Alps `EC11E` vertical rotary encoder, `H20mm`
+- `Button model`: Omron `B3F-40xx`, 12x12 mm THT tactile switch
 - `Direct buttons on MCU`: `A1`, `A2`, `A3`
+- `Potentiometers`: 15 total
+  - `Linear model`: `B103` 75 mm linear slide potentiometer, 10 kOhm
+  - `Rotary model`: TT Electronics `P0915N` vertical rotary potentiometer
+
+## V1 Materials List
+
+This is the practical parts list for rebuilding the current working v1 prototype.
+
+| Qty | Material | Notes |
+| --- | --- | --- |
+| 1 | SparkFun Pro Micro / ATmega32U4 board | The KiCad v1 schematic uses a USB-C Pro Micro clone footprint. Use the matching USB cable for the board you build with. |
+| 1 | `PCF8575` / HW-331 16-bit I2C IO expander module | Handles the 16 deck buttons. |
+| 1 | `CD74HC4067` / `74HC4067` 16-channel analog multiplexer module | Handles the 15 analog controls. |
+| 19 | Omron `B3F-40xx` 12x12 mm THT tactile switches | 16 deck buttons plus 3 direct music-selection buttons on `A1`, `A2`, and `A3`. |
+| 3 | Alps `EC11E` vertical rotary encoders, `H20mm` | 1 browse encoder plus 2 jog wheel encoders. |
+| 10 | TT Electronics `P0915N` vertical rotary potentiometers | Gain, EQ, filter, and other rotary controls. |
+| 5 | `B103` 75 mm linear slide potentiometers, 10 kOhm | Deck volume, tempo, and crossfader controls. |
+| 1 | 3D-printed enclosure body | `3D models/DIY_CDJ_body.stl`. |
+| 1 | 3D-printed enclosure lid | `3D models/DIY_CDJ_lid.stl`. |
+| 1 each | 3D-printed caps and control parts | `crossfader.stl`, `cue.stl`, `encoder.stl`, `joggingWheel.stl`, `knob.stl`, `performance-pad.stl`, and `play-pause.stl`. |
+| As needed | Hookup wire, solder, and 2.54 mm headers | The stable v1 prototype is hand-wired, not PCB-based. |
+
+The current KiCad v1 schematic also contains 16 resistor placeholders with no values or footprints assigned yet, so treat those as schematic TODOs rather than an order-ready BOM line.
 
 ## V1 Wiring Summary
 
@@ -206,75 +231,43 @@ Then enable the mapping in Mixxx.
 - The current jog wheel assignment is swapped between physical control and deck mapping.
 - Rekordbox support should be treated as future hardware research, not a feature of this version.
 
-## V2 Direction
+## V2 Plan
 
-V2 should be a hardware redesign, not a small firmware patch.
+V2 is a hardware redesign focused on one goal: keep a single `USB-C` cable to the computer and add a built-in `3.5 mm` headphone cue output.
 
-The new goal is:
-- keep one `USB-C` cable from the controller to the computer
-- add one `3.5 mm` headphone jack on the controller
-- keep `Master` audio on the computer side
-- send only `Headphones / Cue` audio through the controller
-- keep the project Mixxx-first while moving to a cleaner electronics architecture
+- `Master` stays on the computer side
+- the controller provides only `Headphones / Cue`
+- the project stays Mixxx-first
 
-In practice, that means:
-- `Master` can stay on MacBook speakers, a separate wired audio interface, or another host-selected output
-- the controller only needs to provide the headphone cue path
+### Electronics Plan
 
-## Exact V2 Hardware Stack
+- `Prototype MCU`: `SparkFun Thing Plus ESP32-S3`
+- `Custom PCB MCU`: `ESP32-S3-WROOM-1`
+- `Headphone audio`: `Adafruit TLV320DAC3100` or equivalent small I2S headphone DAC/codec
+- `External ports`: one `USB-C`, one `3.5 mm TRS` headphone jack
+- `Existing controls to keep initially`: `PCF8575`, `74HC4067`, jog encoders, browse encoder, buttons, and potentiometers
 
-### Prototype
+### Core Connections
 
-- `MCU board`: `ESP32-S3-DevKitC-1`
-- `Audio module`: `Adafruit TLV320DAC3100`
-- `Headphone output`: panel-mounted `3.5 mm TRS` jack
-- `Main external connector`: panel-mounted `USB-C`
+- `USB-C` -> `ESP32-S3`
+- `ESP32-S3 I2S` -> `TLV320DAC3100` audio data
+- `ESP32-S3 I2C` -> `TLV320DAC3100` configuration
+- `TLV320DAC3100` -> `3.5 mm TRS` headphone jack
+- `ESP32-S3` -> existing control hardware
 
-### Custom PCB Direction
+### Firmware Work
 
-- `MCU module`: `ESP32-S3-WROOM-1`
-- `Audio path`: `TLV320DAC3100` or equivalent codec / DAC with headphone output
-- `Existing control hardware to keep initially`: `PCF8575`, `74HC4067`, encoders, buttons, potentiometers
+- port the controller logic from `ATmega32U4` to `ESP32-S3`
+- expose one composite USB device with `MIDI + audio`
+- keep the current control behavior as close to `v1` as possible
+- send Mixxx cue audio to the headphone DAC
 
-## Why This Stack
+### Rekordbox Note
 
-- no bulky external audio interface inside the enclosure
-- no internal USB hub
-- one USB device instead of separate controller and sound card devices
-- dedicated headphone cue output without moving the master output into the controller
-- better long-term platform than ATmega32U4 for future firmware and USB work
-
-## V2 Signal Flow
-
-```text
-Computer / Mixxx
-  |
-  | USB-C
-  |
-ESP32-S3
-  |- MIDI control data to Mixxx
-  |- USB audio device for headphone cue
-  |
-  +-- I2S + I2C --> TLV320DAC3100 --> 3.5 mm headphone jack
-
-Master audio stays on the computer-side output.
-```
-
-## V2 Firmware Goals
-
-- present as a composite USB device with `MIDI + audio`
-- port the current controller logic from ATmega32U4 to ESP32-S3
-- keep the current control surface behavior as much as possible
-- configure the headphone DAC over `I2C`
-- stream cue audio to the DAC over `I2S`
-
-## Rekordbox Note
-
-Moving to `ESP32-S3` gives the project a much better platform for USB experiments, but it does not by itself guarantee Rekordbox compatibility.
-
-It especially does not guarantee that the jog wheels will work correctly in Rekordbox. V2 should still be treated as a Mixxx-first design, with Rekordbox compatibility kept as future research.
+`ESP32-S3` is a much better platform for future USB experiments, but it does not guarantee Rekordbox compatibility or working jog wheels. V2 should still be treated as a Mixxx-first design.
 
 ## License
 
 License not defined yet in the repository.
+
 This project was inspired by my friend [@mandiclab](https://github.com/mandiclab) and the [djc-diy](https://github.com/mandiclab/djc-diy) project.
