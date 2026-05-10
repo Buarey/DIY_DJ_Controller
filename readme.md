@@ -58,7 +58,7 @@ This is the practical parts list for rebuilding the current working v1 prototype
 | 1 | SparkFun Pro Micro / ATmega32U4 board | The KiCad v1 schematic uses a USB-C Pro Micro clone footprint. Use the matching USB cable for the board you build with. |
 | 1 | `PCF8575` / HW-331 16-bit I2C IO expander module | Handles the 16 deck buttons. |
 | 1 | `CD74HC4067` / `74HC4067` 16-channel analog multiplexer module | Handles the 15 analog controls. |
-| 19 | Omron `B3F-40xx` 12x12 mm THT tactile switches | 16 deck buttons plus 3 direct music-selection buttons on `A1`, `A2`, and `A3`. |
+| 18 | Omron `B3F-40xx` 12x12 mm THT tactile switches | 16 deck buttons plus 2 direct music-selection buttons. |
 | 3 | Alps `EC11E` vertical rotary encoders, `H20mm` | 1 browse encoder plus 2 jog wheel encoders. |
 | 10 | TT Electronics `P0915N` vertical rotary potentiometers | Gain, EQ, filter, and other rotary controls. |
 | 5 | `B103` 75 mm linear slide potentiometers, 10 kOhm | Deck volume, tempo, and crossfader controls. |
@@ -67,7 +67,7 @@ This is the practical parts list for rebuilding the current working v1 prototype
 | 1 each | 3D-printed caps and control parts | `crossfader.stl`, `cue.stl`, `encoder.stl`, `joggingWheel.stl`, `knob.stl`, `performance-pad.stl`, and `play-pause.stl`. |
 | As needed | Hookup wire, solder, and 2.54 mm headers | The stable v1 prototype is hand-wired, not PCB-based. |
 
-The current KiCad v1 schematic also contains 16 resistor placeholders with no values or footprints assigned yet, so treat those as schematic TODOs rather than an order-ready BOM line.
+The firmware currently defines 3 direct music-selection inputs on `A1`, `A2`, and `A3`, but the KiCad v1 schematic places 18 tactile switches total. Add one extra switch if you wire all 3 direct inputs. The schematic also contains 16 resistor placeholders with no values or footprints assigned yet, so treat those as schematic TODOs rather than an order-ready BOM line.
 
 ## V1 Wiring Summary
 
