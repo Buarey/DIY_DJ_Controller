@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "CDJ_Modules")(type "KiCad")(uri "${KIPRJMOD}/kicad_symbols/CDJ_Modules.kicad_sym")(options "")(descr "CDJ v1 breakout module symbols"))
+  (lib (name "Arduino_Pro_Micro_USB_C")(type "KiCad")(uri "${KIPRJMOD}/kicad_symbols/Arduino_Pro_Micro_USB_C.kicad_sym")(options "")(descr "Arduino Pro Micro USB-C module symbol"))
+)

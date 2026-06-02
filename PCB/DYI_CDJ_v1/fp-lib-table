@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Arduino_Pro_Micro_USB_C")(type "KiCad")(uri "${KIPRJMOD}/kicad_symbols/Arduino_Pro_Micro_USB_C.pretty")(options "")(descr "Arduino Pro Micro USB-C module footprint"))
+  (lib (name "CDJ_Modules")(type "KiCad")(uri "${KIPRJMOD}/kicad_symbols/CDJ_Modules.pretty")(options "")(descr ""))
+)
