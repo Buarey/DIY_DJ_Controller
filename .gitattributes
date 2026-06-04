@@ -1,0 +1,30 @@
+# Text source files
+*.cpp text eol=lf
+*.h text eol=lf
+*.ino text eol=lf
+*.js text eol=lf
+*.xml text eol=lf
+*.csv text eol=lf
+*.ini text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# KiCad design files are text and useful in reviews.
+*.kicad_pcb text eol=lf
+*.kicad_sch text eol=lf
+*.kicad_pro text eol=lf
+*.kicad_sym text eol=lf
+*.kicad_mod text eol=lf
+
+# Binary project assets
+*.stl binary
+*.f3z binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.mp4 binary
+*.mov binary

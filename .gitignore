@@ -1,4 +1,17 @@
+# Local media/output
 /videos
 /output
 /tmp
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# KiCad generated/local files
+**/*-backups/
+**/fp-info-cache
+**/*.kicad_prl
+
+# PlatformIO generated files
+CDJ_firmware/.pio/

@@ -1,0 +1,41 @@
+name: Firmware
+
+on:
+  push:
+    paths:
+      - "CDJ_firmware/**"
+      - ".github/workflows/firmware.yml"
+  pull_request:
+    paths:
+      - "CDJ_firmware/**"
+      - ".github/workflows/firmware.yml"
+
+jobs:
+  platformio:
+    name: PlatformIO build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio
+          key: ${{ runner.os }}-platformio-${{ hashFiles('CDJ_firmware/platformio.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-platformio-
+
+      - name: Install PlatformIO
+        run: python -m pip install --upgrade platformio
+
+      - name: Build firmware
+        run: pio run -d CDJ_firmware

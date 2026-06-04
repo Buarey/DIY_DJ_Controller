@@ -1,13 +1,14 @@
 # DIY DJ Controller
 
+[![Firmware](https://github.com/jueta/CDJ/actions/workflows/firmware.yml/badge.svg)](https://github.com/jueta/CDJ/actions/workflows/firmware.yml)
+
 Homemade CDJ-style DJ controller with a 3D-printed enclosure, hand-built electronics, and custom firmware.
-
-
 
 This repository documents:
 - the current stable Mixxx prototype
 - the firmware and Mixxx mapping that make it work
 - the next hardware direction for a cleaner v2 build
+- open-source hardware, firmware, and documentation for builders who want to contribute
 
 ![Fusion 360 render](pics/fusion1.png)
 
@@ -189,9 +190,13 @@ lib_deps =
 
 - `CDJ_firmware/` - firmware source and PlatformIO config
 - `controllers/mixx_Mapping/` - Mixxx XML and JS mapping
+- `controllers/rekordbox/` - Rekordbox mapping reference and notes
 - `pics/` - renders and prototype photos
 - `reference circuits/` - circuit reference images
-- `CDJv2.f3z` - Fusion 360 model
+- `PCB/` - KiCad schematic, PCB, and custom symbols/footprints
+- `3D models/` - printable parts and Fusion 360 source archive
+- `CONTRIBUTING.md` - contribution guide
+- `.github/` - issue templates, pull request template, and CI workflow
 
 ## Source Of Truth
 
@@ -200,6 +205,22 @@ lib_deps =
 - `Mixxx JS mapping`: `controllers/mixx_Mapping/DJC-DIY-scripts.js`
 
 For exact control behavior, use those files instead of this README.
+
+## Contributing
+
+Contributions are welcome. The most useful contributions right now are practical build reports, Mixxx mapping fixes, firmware cleanup, PCB review, parts substitutions, enclosure fit notes, and documentation improvements.
+
+Before starting a large hardware or firmware change, open an issue so the direction can be discussed. Small documentation fixes can go straight to a pull request.
+
+Useful starter work:
+
+- test the current Mixxx mapping on another OS or Mixxx version
+- document compatible Pro Micro clones, encoders, buttons, and potentiometers
+- improve wiring photos or assembly notes
+- review the KiCad v1 schematic and PCB TODOs
+- add real build notes for 3D-print settings and fit adjustments
+
+See `CONTRIBUTING.md` for the full workflow and pull request checklist.
 
 ## Getting Started
 
@@ -268,6 +289,14 @@ V2 is a hardware redesign focused on one goal: keep a single `USB-C` cable to th
 
 ## License
 
-License not defined yet in the repository.
+This project uses separate licenses by file type:
+
+| Files | License |
+| --- | --- |
+| Firmware and controller mappings | GNU General Public License v3.0 only (`GPL-3.0-only`) |
+| PCB, wiring, CAD, and 3D hardware design files | CERN Open Hardware Licence Version 2 - Strongly Reciprocal (`CERN-OHL-S-2.0`) |
+| Documentation, photos, videos, and other media | Creative Commons Attribution 4.0 International (`CC-BY-4.0`) |
+
+See `LICENSE.md`, `LICENSE-SOFTWARE.txt`, `LICENSE-HARDWARE.txt`, and `LICENSE-DOCS.txt` for details.
 
 This project was inspired by my friend [@mandiclab](https://github.com/mandiclab) and the [djc-diy](https://github.com/mandiclab/djc-diy) project.
