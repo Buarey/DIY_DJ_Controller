@@ -10,9 +10,20 @@ This repository documents:
 - the next hardware direction for a cleaner v2 build
 - open-source hardware, firmware, and documentation for builders who want to contribute
 
-![Fusion 360 render](pics/fusion1.png)
+![DIY DJ controller with blue buttons](pics/blueButtons1.JPG)
 
-![Prototype build](pics/overTable1.jpeg)
+![DIY DJ controller with tools](pics/tools.JPG)
+
+<table>
+  <tr>
+    <td><img src="pics/overTable1.jpeg" alt="Prototype top view before final buttons"></td>
+    <td><img src="pics/soldered2.jpeg" alt="Hand-wired controller electronics"></td>
+  </tr>
+  <tr>
+    <td><img src="pics/fusion1.png" alt="Fusion 360 top assembly render"></td>
+    <td><img src="pics/fusion2.png" alt="Fusion 360 internal assembly render"></td>
+  </tr>
+</table>
 
 ## Status
 
